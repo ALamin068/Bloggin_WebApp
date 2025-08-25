@@ -1,0 +1,32 @@
+{
+  "name": "dynamic-blog-webapp",
+  "version": "1.0.0",
+  "description": "A modern, dynamic blog application with posts about Spring Boot, Java, React, and JavaScript",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "echo 'Deploying to GitHub Pages...'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/dynamic-blog-webapp.git"
+  },
+  "keywords": [
+    "blog",
+    "javascript",
+    "spring-boot",
+    "java",
+    "react",
+    "web-development",
+    "static-site"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/dynamic-blog-webapp/issues"
+  },
+  "homepage": "https://yourusername.github.io/dynamic-blog-webapp/"
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Sample Posts</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        .success {
+            background: #2196F3;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+        .count {
+            font-size: 1.2em;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Load Sample Blog Posts</h1>
+        <p>Click the button below to load 20 sample posts about Spring, Spring Boot, Java, React, and JavaScript into your blog!</p>
+        
+        <div class="count" id="currentCount"></div>
+        
+        <button onclick="loadSamplePosts()">Load Sample Posts</button>
+        <button onclick="clearAllPosts()">Clear All Posts</button>
+        <button onclick="goToBlog()">Go to Blog</button>
+        
+        <div id="success" class="success"></div>
+    </div>
+
+    <script>
+        // Display current post count
+        function updatePostCount() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+            document.getElementById('currentCount').textContent = `Current posts in blog: ${posts.length}`;
+        }
+        
+        // Load sample posts from JSON file
+        async function loadSamplePosts() {
+            try {
+                const response = await fetch('sample-posts.json');
+                const samplePosts = await response.json();
+                
+                const existingPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+                const existingIds = new Set(existingPosts.map(post => post.id));
+                
+                // Filter out posts that already exist
+                const newPosts = samplePosts.filter(post => !existingIds.has(post.id));
+                
+                if (newPosts.length === 0) {
+                    showMessage('All sample posts are already loaded!', '#ff9800');
+                    return;
+                }
+                
+                // Merge new posts with existing ones
+                const allPosts = [...existingPosts, ...newPosts];
+                allPosts.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                
+                localStorage.setItem('blogPosts', JSON.stringify(allPosts));
+                
+                showMessage(`Successfully loaded ${newPosts.length} new posts!`, '#4CAF50');
+                updatePostCount();
+                
+            } catch (error) {
+                showMessage('Error loading sample posts. Please try again.', '#f44336');
+                console.error('Error:', error);
+            }
+        }
+        
+        function clearAllPosts() {
+            if (confirm('Are you sure you want to clear all posts? This cannot be undone.')) {
+                localStorage.removeItem('blogPosts');
+                showMessage('All posts cleared!', '#ff9800');
+                updatePostCount();
+            }
+        }
+        
+        function goToBlog() {
+            window.location.href = 'index.html';
+        }
+        
+        function showMessage(message, color) {
+            const successDiv = document.getElementById('success');
+            successDiv.textContent = message;
+            successDiv.style.background = color;
+            successDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Initialize page
+        updatePostCount();
+    </script>
+</body>
+</html>
