@@ -7,10 +7,9 @@
 A modern, feature-rich blog application built with vanilla JavaScript, featuring posts about Spring Boot, Java, React, and JavaScript development.
 
 ## 🚀 Live Demo
-[**View Live Application**](https://yourusername.github.io/dynamic-blog-webapp/)
+[**View Live Application**](https://alamin068.github.io/Bloggin_WebApp/)
 
 ## ✨ Features
-
 ### 📖 **Content Management**
 - ✅ Create, edit, and delete blog posts
 - ✅ Rich post metadata (categories, tags, reading time)
